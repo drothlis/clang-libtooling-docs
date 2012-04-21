@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+
+while (<>) {
+  if (/^@> (.*)/) {
+    # @> shell-command -- the line is replaced with the output of command
+    $_ = `$1`
+  }
+  print;
+}

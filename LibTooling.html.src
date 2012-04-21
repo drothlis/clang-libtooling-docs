@@ -110,37 +110,7 @@ the files "a.cc" and "b.cc" one would write:
 <p>Now we combine the two previous steps into our first real tool. This example
 tool is also checked into the clang tree at tools/clang-check/ClangCheck.cpp.
 <pre>
-  #include "llvm/Support/CommandLine.h"
-  #include "clang/Frontend/FrontendActions.h"
-  #include "clang/Tooling/CompilationDatabase.h"
-  #include "clang/Tooling/Tooling.h"
-
-  using namespace clang::tooling;
-  using namespace llvm;
-
-  cl::opt&lt;std::string> BuildPath(
-    cl::Positional,
-    cl::desc("&lt;build-path>"));
-
-  cl::list&lt;std::string> SourcePaths(
-    cl::Positional,
-    cl::desc("&lt;source0> [... &lt;sourceN>]"),
-    cl::OneOrMore);
-
-  int main(int argc, const char **argv) {
-    llvm::OwningPtr&lt;CompilationDatabase> Compilations(
-      FixedCompilationDatabase::loadFromCommandLine(argc, argv));
-    cl::ParseCommandLineOptions(argc, argv);
-    if (!Compilations) {
-      std::string ErrorMessage;
-      Compilations.reset(CompilationDatabase::loadFromDirectory(BuildPath,
-                                                                ErrorMessage));
-      if (!Compilations)
-        llvm::report_fatal_error(ErrorMessage);
-    }
-    ClangTool Tool(*Compilations, SourcePaths);
-    return Tool.run(newFrontendActionFactory&lt;clang::SyntaxOnlyAction>());
-  }
+@> sed -n '/^#include/,$ p' ClangCheck.cpp
 </pre>
 </p>
 
