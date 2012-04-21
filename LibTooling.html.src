@@ -120,11 +120,11 @@ available to you in bin/clang-check inside your build directory.</p>
 <p>You can run try clang-check on a file in the llvm repository by specifying
 all the needed parameters after a "--" separator:
 <pre>
-  $ cd /path/to/source/llvm
-  $ export BD=/path/to/build/llvm
-  $ $BD/bin/clang-check . tools/clang/tools/clang-check/ClangCheck.cpp -- \
-    clang++ -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS \
-    -Itools/clang/include -I$BD/include -Iinclude -Itools/clang/lib/Headers -c
+@$ cd $LLVM_SRC && $LLVM_BUILD/bin/clang-check \
+    . tools/clang/tools/clang-check/ClangCheck.cpp -- \
+    clang++ -c -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS \
+    -Itools/clang/include -I$LLVM_BUILD/include \
+    -Iinclude -Itools/clang/lib/Headers
 </pre>
 </p>
 

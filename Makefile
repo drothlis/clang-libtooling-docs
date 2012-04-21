@@ -6,8 +6,12 @@
 #
 # Inspired by Go's codewalks: http://golang.org/doc/codewalk/
 #
+# Run with:
+#   LLVM_SRC=path/to/llvm/source LLVM_BUILD=path/to/llvm/build make
 
 LibTooling.html: LibTooling.html.src codewalk
+	@[ -n "$$LLVM_SRC" -a -n "$$LLVM_BUILD" ] || \
+	  { echo "Error: You must set LLVM_SRC and LLVM_BUILD" >&2; exit 1; }
 	cat $< | ./codewalk > $@
 
 clean:

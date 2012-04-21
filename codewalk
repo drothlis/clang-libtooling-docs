@@ -1,9 +1,16 @@
 #!/usr/bin/env perl
 
 while (<>) {
-  if (/^@> (.*)/) {
+  # slurp in the next line if current line ends in "\"
+  while (/\A@.*\\\Z/ms) {
+    $_ .= <>;
+  }
+
+  if (/\A@([>\$]) (.*)/ms) {
     # @> shell-command -- the line is replaced with the output of command
-    $_ = `$1`
+    if ($1 eq ">") { $_ = `$2 2>&1` }
+    # @$ shell-command -- print the shell comand and its output
+    if ($1 eq "\$") { $_ = "<b>\$</b> " . $2 . "\n" . `($2) 2>&1`; }
   }
   print;
 }
